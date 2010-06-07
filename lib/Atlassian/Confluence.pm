@@ -154,6 +154,15 @@ sub logout {
   }
 }
 
+# Set the XML encoding value.
+sub encoding {
+  my ($self, $enc) = @_;
+  if ($enc) {
+    carp "Setting xml encoding to $enc";
+    $RPC::XML::ENCODING = $enc;
+  }
+}
+
 sub api_version{
   my ($self, $api) = @_;
   if ($api) {
@@ -256,21 +265,11 @@ sub attachment {
   }
 }
 
-
-# Set the XML encoding value.
-sub encoding {
-  my ($self, $enc) = @_;
-  if ($enc) {
-    carp "Setting xml encoding to $enc";
-    $RPC::XML::ENCODING = $enc;
-  }
-}
-
-# SPACES
+#  Space methods
 
 sub addSpace {
   my ($self, $space) = @_;
-  carp "addSpace: @args" if $CONF_TRACE;
+  carp "addSpace" if $CONF_TRACE;
   my $res = _do_rpc_request($self, "addSpace", space($self, $space));
   return $res;
 }
@@ -308,7 +307,7 @@ sub importSpace {
   return $res;
 }
 
-# ATTACHMENTS
+# File attachment methods
 
 sub addAttachment {
   my ($self, $contentId, $attachmentFile, $comment) = @_;
